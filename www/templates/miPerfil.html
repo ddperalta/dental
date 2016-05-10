@@ -1,0 +1,21 @@
+<ion-view title="Mi Perfil" id="page2">
+    <ion-content padding="true" class="has-header">
+        <div>
+            <img src="img/0zQKNeXITAiHZ6y4B8sb_edit_user-.png" width="30%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+        </div>
+        <div class="list card">
+            <div class="item item-divider">Paciente</div>
+            <div class="item item-body">
+                <div id="miPerfil-markdown1" style="color:#000000;">
+                    <p>
+                        <strong>Nombre</strong> {{profile.name}} {{profile.lastname}}</p>
+
+                    <p>
+                        <strong>Edad</strong> {{profile.age}} años</p>
+                    <p>
+                        <strong>Cumpleaños</strong> {{ profile.birthday_string }} </p>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

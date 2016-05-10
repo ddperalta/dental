@@ -1,0 +1,18 @@
+<ion-view title="QuiroDental" id="page5">
+    <ion-content padding="true" class="has-header">
+        <form class="list">
+            <ion-list>
+                <label class="item item-input" name="patient_id">
+                    <span class="input-label">Usuario</span>
+                    <input type="text" placeholder="Número de paciente" ng-model="login_data.username">
+                </label>
+                <label class="item item-input" name="patient_pwd">
+                    <span class="input-label">Password</span>
+                    <input type="password" placeholder="Contraseña" ng-model="login_data.pass">
+                </label>
+            </ion-list>
+            <div class="spacer" style="height: 40px;"></div>
+            <a href='#' id="quiroDental-button1" class="button button-positive  button-block icon-left ion-android-checkbox-outline" ng-click="login()">Ingresar</a>
+        </form>
+    </ion-content>
+</ion-view>
