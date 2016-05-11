@@ -39,22 +39,41 @@ angular.module('app.controllers', [])
 	//sendmail at rate
 })
       
-.controller('quiroDentalCtrl', function($scope, $http, $state, $localStorage) {
+.controller('quiroDentalCtrl', function($scope, $http, $state, $localStorage, $q) {
 	$scope.$storage = $localStorage.$default({
 	    login_data : {},
 	    units: [],
 	    doctors: []
 	});
-	//get and store doctors
-	//get and store units
+	
+	//TODO make API route for /doc's profiles 
+	var url_doctors = 'http://dental.peralta.be/user.json';
+	var url_profiles = 'http://dental.peralta.be/profile.json';
+	var url_units = 'http://dental.peralta.be/unit.json';
 
+	$http({method:'GET', url: url_units})
+		.then(function(result) {
+			$localStorage.units = result.data.unit;
+			return $http({method:'GET', url: url_doctors});
+		})
+		.then(function(result) {
+			var doctors = _.filter(result.data.user, function(u) { return u.role == 'doc' });
+			$localStorage.doctors = doctors;
+			return $http({method: 'GET', url: url_profiles});
+		})
+		.then(function(result) {
+			var ids = _.pluck($localStorage.doctors, 'id_profile');
+			var profiles = _.filter(result.data.profile, function (u) { return _.indexOf(ids,u.id) >= 0 });
+			$localStorage.doctors = profiles;
+		});
+	
 	$scope.login_data = $scope.$storage.login_data;
 	$scope.login_data.pass = '';
 
 	$scope.login = function() {
-		var user = $scope.login_data.username;
-		var pass = $scope.login_data.pass;
-		var req = {
+		user = $scope.login_data.username;
+		pass = $scope.login_data.pass;
+		req = {
 			method: 'GET',
 			url: 'http://dental.peralta.be/user/login.json?username='+user+'&pass='+pass
 		}
@@ -73,6 +92,9 @@ angular.module('app.controllers', [])
             		}
             	};
             });
+		var user = null;
+		var pass = null;
+		var req = null;
 	};
 
 })

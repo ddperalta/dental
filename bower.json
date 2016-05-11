@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "ngstorage": "^0.3.10",
-    "moment": "^2.13.0"
+    "moment": "^2.13.0",
+    "underscore": "^1.8.3"
   }
 }
