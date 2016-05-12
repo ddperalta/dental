@@ -1,36 +1,19 @@
 <ion-view title="Historial" id="page4">
     <ion-content padding="true" class="has-header">
-        <div class="list card">
-            <div class="item item-divider">12 Feb 2016</div>
+        <div class="list card" ng-repeat='date in historial'>
+            <div class="item item-divider">{{date.in_date}}</div>
             <div class="item item-body">
-                <div>
-                    <img src="img/qk5CtpKeSMKWrzaQqS9A_google-map.jpg" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
-                </div>
                 <ion-list>
                     <ion-item>Resina</ion-item>
-                    <ion-checkbox name="payed">Monto $ 340</ion-checkbox>
+                    <ion-checkbox name="payed">Monto $ {{date.total}}</ion-checkbox>
                     <ion-item>Atendió</ion-item>
-                    <ion-item>C.D. Erika Bernal A.</ion-item>
+                    <ion-item>C.D. {{date.doctor}}</ion-item>
                 </ion-list>
                 <div class="button-bar">
                     <button id="historial-button3" class="button button-positive  button-block">🙁</button>
                     <button id="historial-button4" class="button button-positive  button-block">😐</button>
                     <button id="historial-button5" class="button button-positive  button-block">😃</button>
                 </div>
-            </div>
-        </div>
-        <div class="list card">
-            <div class="item item-divider">4 Feb 2016</div>
-            <div class="item item-body">
-                <div>
-                    <img src="img/qk5CtpKeSMKWrzaQqS9A_google-map.jpg" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
-                </div>
-                <ion-list>
-                    <ion-item>Resina</ion-item>
-                    <ion-checkbox name="payed">Monto $ 340</ion-checkbox>
-                    <ion-item>Atendió</ion-item>
-                    <ion-item>C.D. Erika Bernal A.</ion-item>
-                </ion-list>
             </div>
         </div>
     </ion-content>

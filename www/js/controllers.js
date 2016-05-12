@@ -1,45 +1,83 @@
 angular.module('app.controllers', [])
   
 .controller('miPerfilCtrl', function($scope, $http, $state, $localStorage) {
+	angular.element(document).ready(function () {
 
-	if ( !$localStorage.login_data ) {
-		$state.go('quiroDental');
-	} 
+		if ( !$localStorage.login_data ) {
+			$state.go('quiroDental');
+		} 
 
-	if ( $localStorage.profile && 
-		 $localStorage.profile.id == $localStorage.login_data.id_profile ) {
-		$scope.profile = $localStorage.profile;
-	} else {
-		var req = {
-			method: 'GET',
-			url: 'http://dental.peralta.be/profile/view/'+$localStorage.login_data.id_profile+'.json'
+		if ( $localStorage.profile && 
+			 $localStorage.profile.id == $localStorage.login_data.id_profile ) {
+			 $scope.profile = $localStorage.profile;
+		} else {
+
+			var req = {
+				method: 'GET',
+				url: 'http://dental.peralta.be/profile/view/'+$localStorage.login_data.id_profile+'.json'
+			};
+			$http(req).then(function(result) {
+				$scope.profile = result.data.profile;
+				var diff = new Date() - new Date($scope.profile.birthday.slice(0,19));
+				$scope.profile.age = Math.ceil(diff / (1000 * 3600 * 24 * 365)); 
+				$scope.profile.birthday_string = moment($scope.profile.birthday).add(1,'day').format('DD MMMM');
+				$localStorage.profile = $scope.profile;
+			});
 		};
-		
-		$http(req).then(function(result) {
-			$scope.profile = result.data.profile;
-			var diff = new Date() - new Date($scope.profile.birthday);
-			$scope.profile.age = Math.ceil(diff / (1000 * 3600 * 24 * 365)); 
-			$scope.profile.birthday_string = moment($scope.profile.birthday).add(1,'day').format('DD MMMM');
-			$localStorage.profile = $scope.profile;
-		});
-		$localStorage.profile = $scope.profile;
-	};
+    });
 })
    
-.controller('cartTabDefaultPageCtrl', function($scope) {
-	//get dates byUserID
-	//filter > now + 2h
-	//sendmail at confirm
+.controller('cartTabDefaultPageCtrl', function($scope, $localStorage, $http) {
+	$scope.goMap = function (lat, lon) {
+			if (ionic.Platform.isIOS()) {
+				 window.location.href = "maps://maps.apple.com/?q=" + lat + "," + lon;
+			} else {
+				window.location.href = "maps://maps.google.com/?q=" + lat + "," + lon;
 
+			}
+		};
+
+	$scope.historial = [];
+
+	url = 'http://dental.peralta.be/dental-date/getByUserID.json?userID='+$localStorage.login_data.id;
+	$http({method:'GET', url:url}).then(function(result) {
+		$scope.historial = _.filter(result.data.dentalDate, function(i) {
+
+			var isFuture = new Date(i.in_date.slice(0,19)) > new Date();
+			i.in_date = moment(i.in_date).format('DD MMMM - HH:mm');
+			i.latitude = '19.2992064';
+			i.longitude = '-99.157939';
+			i.location = _.find($localStorage.units, function (j) {
+				return j.id == i.id_unit;
+			});
+			return isFuture;
+		});
+
+
+	});
+	//sendmail at confirm
+	var url = '';
 })
    
-.controller('historialCtrl', function($scope) {
-	//get dates byUserID
-	//filter < now + 2h
+.controller('historialCtrl', function($scope, $localStorage, $http) {
+	$scope.historial = [];
+
+	url = 'http://dental.peralta.be/dental-date/getByUserID.json?userID='+$localStorage.login_data.id;
+	$http({method:'GET', url:url}).then(function(result) {
+		$scope.historial = _.filter(result.data.dentalDate, function(i) {
+
+			var isFuture = new Date(i.in_date.slice(0,19)) < new Date();
+			i.in_date = moment(i.in_date).format('DD MMMM - HH:mm');
+			i.doctor = _.find($localStorage.doctors, function(j) {return j.id == i.id_doc}).name;
+			return isFuture;
+		});
+	});
+	var url = '';
 	//sendmail at rate
 })
       
 .controller('quiroDentalCtrl', function($scope, $http, $state, $localStorage, $q) {
+	$localStorage.$reset();
 	$scope.$storage = $localStorage.$default({
 	    login_data : {},
 	    units: [],
