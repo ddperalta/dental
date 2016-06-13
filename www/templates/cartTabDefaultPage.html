@@ -1,18 +1,25 @@
 <ion-view title="Próximas citas" id="page3">
     <ion-content padding="true" class="has-header">
         <div class="list card" ng-repeat='date in historial'>
-            <div class="item item-divider">{{date.in_date}}</div>
+            <div class="item item-divider">{{date.in_dateStr}}</div>
             <div class="item item-body">
                 <form class="list">
-                    <ion-toggle toggle-class="toggle-positive" name="asist">Confirmar Asistencia</ion-toggle>
+                    <ion-toggle 
+                    toggle-class="toggle-positive" 
+                    name="asist" 
+                    ng-model="date.confirmed"
+                    ng-click="confirmDate(date.id)"
+                    ng-disabled="date.confirmed"
+                    >Confirmar Asistencia</ion-toggle>
                     <div>
-                        <a ng-click="goMap(date.latitude, date.longitude)">
+                        <a ng-click="goMap(date.location.latitude, date.location.longitude)">
                             <img src="img/uLQHGnIVR3mLC91aGqtC_Selection_049.png" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
                         </a>
                     </div>
                     <ion-list>
                         <ion-item>Ubicación: {{date.location.name}}</ion-item>
-                        <ion-item>{{date.in_date}}</ion-item>
+                        <ion-item>{{date.in_dateStr}}</ion-item>
+                        <button class="button button-full button-positive" ng-click="goCalendar(date.in_date, date.location.name)">Agregar a calendario</button>
                     </ion-list>
                 </form>
             </div>

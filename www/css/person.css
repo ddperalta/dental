@@ -1,0 +1,12 @@
+.birthdaybanner {
+	background-image: url('/img/Balloons_Banner.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+.bar-stable.bar.bar-header {
+	background-image: url('/img/icon.png') !important;
+    background-size: contain !important;
+    background-position: 10% 50% !important;
+    background-repeat: no-repeat !important;
+    background-color: transparent;
+}

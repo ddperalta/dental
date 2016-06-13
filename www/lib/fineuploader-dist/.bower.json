@@ -1,0 +1,38 @@
+{
+  "name": "fineuploader-dist",
+  "version": "5.8.0",
+  "author": "Fery Wardiyanto",
+  "description": "A bower build for FineUploader/fine-uploader",
+  "license": "https://raw.githubusercontent.com/FineUploader/fine-uploader/master/LICENSE",
+  "keywords": [
+    "fineuploader",
+    "dist",
+    "package",
+    "upload",
+    "file",
+    "chunking"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feryardiant/fineuploader-dist.git"
+  },
+  "main": [
+    "dist/*"
+  ],
+  "ignore": [
+    ".*",
+    "build.sh",
+    "src"
+  ],
+  "homepage": "https://github.com/feryardiant/fineuploader-dist",
+  "_release": "5.8.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "5.8.0",
+    "commit": "21377751b6b209168b746a3547d485d5e020d9f7"
+  },
+  "_source": "https://github.com/feryardiant/fineuploader-dist.git",
+  "_target": "^5.8.0",
+  "_originalSource": "fineuploader-dist",
+  "_direct": true
+}

@@ -7,6 +7,8 @@
   "dependencies": {
     "ngstorage": "^0.3.10",
     "moment": "^2.13.0",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "ngCordova": "^0.1.26-alpha",
+    "fineuploader-dist": "^5.8.0"
   }
 }

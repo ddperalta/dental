@@ -1,5 +1,5 @@
 <ion-view title="Mi Perfil" id="page2">
-    <ion-content padding="true" class="has-header">
+    <ion-content padding="true" class="has-header"  ng-class="{birthdaybanner: isBirthday}">
         <div>
             <img src="img/0zQKNeXITAiHZ6y4B8sb_edit_user-.png" width="30%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
         </div>
@@ -8,14 +8,18 @@
             <div class="item item-body">
                 <div id="miPerfil-markdown1" style="color:#000000;">
                     <p>
-                        <strong>Nombre</strong> {{profile.name}} {{profile.lastname}}</p>
+                        <strong>Nombre</strong> {{profile.full_name}} </p>
 
                     <p>
                         <strong>Edad</strong> {{profile.age}} años</p>
                     <p>
-                        <strong>Cumpleaños</strong> {{ profile.birthday_string }} </p>
+                        <span ng-show="isBirthday"><strong>¡Feliz </strong></span>
+                        <strong>Cumpleaños</strong><span ng-show="isBirthday"><strong>!</strong></span><span ng-show="!isBirthday"> {{ profile.birthday_string }}</span></p>
                 </div>
             </div>
+        </div>
+        <div>
+            <a href="#/login" class="button button-assertive button-block icon-left ion-close-circled">Salir</a>
         </div>
     </ion-content>
 </ion-view>
