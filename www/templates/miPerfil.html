@@ -1,7 +1,7 @@
 <ion-view title="Mi Perfil" id="page2">
     <ion-content padding="true" class="has-header"  ng-class="{birthdaybanner: isBirthday}">
         <div>
-            <img src="img/0zQKNeXITAiHZ6y4B8sb_edit_user-.png" width="30%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+            <img id="myImage" ng-click="openfile()" src="img/0zQKNeXITAiHZ6y4B8sb_edit_user-.png" width="30%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
         </div>
         <div class="list card">
             <div class="item item-divider">Paciente</div>
@@ -19,7 +19,10 @@
             </div>
         </div>
         <div>
-            <a href="#/login" class="button button-assertive button-block icon-left ion-close-circled">Salir</a>
+            <a href="tel:59898172" ng-click="call()" class="button button-balanced button-block icon-left ion-ios-telephone">Llámanos</a>
+        </div>
+        <div>
+            <a ng-click="exit()" href="#" class="button button-assertive button-block icon-left ion-close-circled">Salir</a>
         </div>
     </ion-content>
 </ion-view>

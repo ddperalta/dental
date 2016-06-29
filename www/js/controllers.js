@@ -1,21 +1,77 @@
 angular.module('app.controllers', [])
   
-.controller('miPerfilCtrl', function($scope, $http, $state, $localStorage) {
-	$scope.profile = $localStorage.profile;
-	angular.element(document).ready(function () {
-		if ( !$localStorage.login_data ) {
-			$state.go('quiroDental');
+.controller('miPerfilCtrl', function($rootScope, $scope, $http, $state, $localStorage, $timeout, $cordovaCamera, $window) {
+	$rootScope.$on('$locationChangeSuccess', function(evt) {
+		if ( !$localStorage.profile ) {
+			$state.go('quiroDental', {}, {reload: true});
 		}
-		if ($localStorage.profile.birthday) {
+		if (typeof $localStorage.profile !== 'undefined' && $localStorage.profile.birthday) {
 			var today = new Date();
-			var birthday = new Date($localStorage.profile.birthday);
+			var birthday = new Date($localStorage.profile.birthday.slice(0, 19));
 			birthday.setDate(birthday.getDate()+1);
 			if (today.getDate() == birthday.getDate() && today.getMonth() == birthday.getMonth()) {
 				$scope.isBirthday = true;
 			}
 		}
-	   
+	  });
+	$scope.image = '';
+	$scope.exit = function () {
+		$localStorage.$reset();
+		$state.go('quiroDental', {}, {reload: true});
+
+	}
+	$scope.call = function () {
+		window.open('tel:59898172', '_system');
+	}
+	$scope.openfile = function () {
+
+		var options = {
+			quality: 50,
+			destinationType: Camera.DestinationType.DATA_URL,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 100,
+			targetHeight: 100,
+			popoverOptions: CameraPopoverOptions,
+		};
+
+		$cordovaCamera.getPicture(options).then(function(imageURI) {
+			var image = document.getElementById('myImage');
+			image.src = "data:image/jpeg;base64,"+imageURI;
+			$http({
+			  method: 'POST',
+			  url: 'http://dental.peralta.be/patients/setPhoto/'+$scope.profile.id,
+			  data: {image: imageURI}
+			}).then(function successCallback(response) {
+
+			  }, function errorCallback(response) {
+			    
+			  });
+		}, function(err) {
+			// error
+		});
+
+	};
+	$scope.onImageChange = function () {
+		$scope.image = document.getElementById('file').files[0].name;
+	}
+	
+	angular.element(document).ready(function () {
+		$scope.profile = $localStorage.profile;
+		if ( !$localStorage.profile ) {
+			$state.go('quiroDental', {}, {reload: true});
+		}
+		if ($localStorage.profile.birthday) {
+			var today = new Date();
+			var birthday = new Date($localStorage.profile.birthday.slice(0, 19));
+			birthday.setDate(birthday.getDate()+1);
+			if (today.getDate() == birthday.getDate() && today.getMonth() == birthday.getMonth()) {
+				$scope.isBirthday = true;
+			}
+		}
 	});
+
 })
    
 .controller('cartTabDefaultPageCtrl', function($scope, $localStorage, $http, $cordovaCalendar, $ionicPopup) {
@@ -143,6 +199,7 @@ angular.module('app.controllers', [])
 	$scope.login_data = $scope.$storage.login_data;
 	$scope.login_data.pass = '';
 
+	
 	$scope.login = function() {
 		user = $scope.login_data.username;
 		pass = $scope.login_data.pass;
@@ -158,7 +215,7 @@ angular.module('app.controllers', [])
             		$scope.profile = response.data.user[0];
             		$localStorage.login_data = $scope.login_data;
             		$localStorage.profile = $scope.login_data;
-            		$state.go('tabsController.miPerfil');
+            		$state.go('tabsController.miPerfil', {}, {reload: true});
             	} else {
             		$scope.login_data = {
             			username: '',

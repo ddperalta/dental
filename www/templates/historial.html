@@ -13,6 +13,7 @@
                     <button ng-click="rateDate(date.id, 'BAD')" id="historial-button3" class="button button-positive  button-block">😔</button>
                     <button ng-click="rateDate(date.id, 'REGULAR')" id="historial-button4" class="button button-positive  button-block">😐</button>
                     <button ng-click="rateDate(date.id, 'GOOD')" id="historial-button5" class="button button-positive  button-block">😃</button>
+                    <button ng-click="rateDate(date.id, 'EXELLENT')" id="historial-button5" class="button button-positive  button-block">⭐️</button>
                 </div>
             </div>
         </div>
@@ -20,12 +21,13 @@
             <div class="item item-divider">Servicio</div>
             <div class="item item-body">
                 <ion-list>
-                    <ion-item>¿Qué te pareció la atención que reciviste?</ion-item>
+                    <ion-item class="item-text-wrap">¿Qué te pareció la atención que reciviste?</ion-item>
                     </ion-list>
                 <div class="button-bar" ng-show="date.rated == '' || date.rated == null">
                     <button class="button button-positive  button-block">😔</button>
                     <button class="button button-positive  button-block">😐</button>
                     <button class="button button-positive  button-block">😃</button>
+                    <button class="button button-positive  button-block">⭐️</button>
                 </div>
             </div>
         </div>
